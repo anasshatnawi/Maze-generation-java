@@ -41,9 +41,7 @@ public class RectangularLabyrinth {
 		// Body ...
 	}
 	
-	public void PrintLabyrinthSVG(String outpuprefix) {
+	public void PrintLabyrinthSVG(String outputprefix) {
 		// Body...
 	}
-	
-	//int width = 0; ???
 }

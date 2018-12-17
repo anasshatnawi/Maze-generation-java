@@ -8,6 +8,8 @@ public class Main {
 		String outputprefix = "maze";
 		
 		HashMap<String, Integer> optionmap = new HashMap<String, Integer>();
+		optionmap.put("-m", 0);
+		optionmap.put("-s", 20);
 		optionmap.put("-w", 20);
 		optionmap.put("-h", 20);
 		
@@ -30,7 +32,6 @@ public class Main {
 		    optionmap.put(args[i++] , x);
 		  }
 		
-		DepthFirstSearch depthFirstSearch;
 		RectangularLabyrinth rectangularLabyrinth;
 		
 		if (optionmap.get("-w") < 1 || optionmap.get("-h") < 1) {
@@ -41,17 +42,54 @@ public class Main {
 		System.out.println("Rectangular labyrinth of size " + optionmap.get("-w") + "x"
 				+ optionmap.get("-h"));
 		rectangularLabyrinth = new RectangularLabyrinth(optionmap.get("-w"), optionmap.get("-h"));
-		
-		System.out.println("labyrinth generation using Depth-first search");
-		DepthFirstSearch depthFisrtSearch = new DepthFirstSearch();
-		
-		System.out.println("Initialising graph...");
-		rectangularLabyrinth.InitialiseGraph();
-		
-		System.out.println("Generating labyrinth..."); 
-		rectangularLabyrinth.GenerateLabyrinth(depthFisrtSearch);
-		
-		rectangularLabyrinth.PrintLabyrinthSVG(outputprefix);
 
+
+		switch (optionmap.get("-a")) {
+
+		case 0: {
+			if (optionmap.get("-s") < 1) {
+				System.out.println("Invalide size " + optionmap.get("-s")
+						+ " for circular labyrinth");
+			}
+			System.out.println("Circular labyrinth of size " + optionmap.get("-s"));
+			CircularLabyrinth circularLabyrinth = new CircularLabyrinth(optionmap.get("-s"));
+			
+			System.out.println("labyrinth generation using Depth-first search");
+			DepthFirstSearch depthFisrtSearch = new DepthFirstSearch();
+			
+			System.out.println("Initialising graph...");
+			rectangularLabyrinth.InitialiseGraph();
+			
+			System.out.println("Generating labyrinth..."); 
+			rectangularLabyrinth.GenerateLabyrinth(depthFisrtSearch);
+
+			break;
+		}
+
+		case 1: {
+			if (optionmap.get("-s") < 1) {
+				System.out.println("Invalide size " + optionmap.get("-s")
+						+ " for circular labyrinth");
+			}
+			System.out.println("Circular labyrinth of size " + optionmap.get("-s"));
+			CircularLabyrinth circularLabyrinth = new CircularLabyrinth(optionmap.get("-s"));
+			
+			System.out.println("labyrinth generation using Breadth-first search");
+			DepthFirstSearch depthFirstSearch = new DepthFirstSearch();
+			
+			System.out.println("Initialising graph...");
+			rectangularLabyrinth.InitialiseGraph();
+			
+			System.out.println("Generating labyrinth..."); 
+			rectangularLabyrinth.GenerateLabyrinth(depthFirstSearch);
+			
+			circularLabyrinth.PrintLabyrinthSVG(outputprefix);
+
+			break;
+		}
+
+		default:
+			System.out.println("Unknown labyrinth type " + optionmap.get("-m"));
+		}
 	}
 }
