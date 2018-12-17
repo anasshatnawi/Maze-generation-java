@@ -5,14 +5,13 @@ import java.util.HashMap;
 public class Main {
 
 	public static void main(String[] args) {
-		String outputprefix = "labyrinth";
+		String outputprefix = "maze";
 		
 		HashMap<String, Integer> optionmap = new HashMap<String, Integer>();
 		optionmap.put("-m", 0);
 		optionmap.put("-s", 20);
 		optionmap.put("-w", 20);
 		optionmap.put("-h", 20);
-		optionmap.put("-t", 0);
 		
 		/* parsing command line parameters */
 		for (int i = 1; i < args.length; i++) {
@@ -33,30 +32,42 @@ public class Main {
 		    optionmap.put(args[i++] , x);
 		  }
 		
-		DepthFirstSearch depthFirstSearch;
-		Labyrinth labyrinth = null;
+		RectangularLabyrinth rectangularMaze;
 		
-		switch (optionmap.get("-m")) {
-		case 0: {
-			if (optionmap.get("-w") < 1 || optionmap.get("-h") < 1) {
-				System.out.println("Invalide size " + optionmap.get("-w") + "x"
-						+ optionmap.get("-h") + " for rectangular labyrinth");
-			}
+		if (optionmap.get("-w") < 1 || optionmap.get("-h") < 1) {
+			System.out.println("Invalide size " + optionmap.get("-w") + "x"
+					+ optionmap.get("-h") + " for rectangular labyrinth");
+		}
 
-			System.out.println("Rectangular labyrinth of size " + optionmap.get("-w") + "x"
-					+ optionmap.get("-h"));
-			labyrinth = new RectangularLabyrinth(optionmap.get("-w"), optionmap.get("-h"));
+		System.out.println("Rectangular labyrinth of size " + optionmap.get("-w") + "x"
+				+ optionmap.get("-h"));
+		rectangularMaze = new RectangularLabyrinth(optionmap.get("-w"), optionmap.get("-h"));
+
+
+		switch (optionmap.get("-a")) {
+
+		case 0: {
+			System.out.println("labyrinth generation using Depth-first search");
+			DepthFirstSearch depthFisrtSearch = new DepthFirstSearch();
+			
+			System.out.println("Initialising graph...");
+			rectangularMaze.InitialiseGraph();
+			
+			System.out.println("Generating labyrinth..."); 
+			rectangularMaze.GenerateLabyrinth(depthFisrtSearch);
 
 			break;
 		}
 
 		case 1: {
-			if (optionmap.get("-s") < 1) {
-				System.out.println("Invalide size " + optionmap.get("-s")
-						+ " for circular labyrinth");
-			}
-			System.out.println("Circular labyrinth of size " + optionmap.get("-s"));
-			labyrinth = new CircularLabyrinth(optionmap.get("-s"));
+			System.out.println("labyrinth generation using Breadth-first search");
+			BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch();
+			
+			System.out.println("Initialising graph...");
+			rectangularMaze.InitialiseGraph();
+			
+			System.out.println("Generating labyrinth..."); 
+			rectangularMaze.GenerateLabyrinth(breadthFirstSearch);
 
 			break;
 		}
@@ -65,26 +76,6 @@ public class Main {
 			System.out.println("Unknown labyrinth type " + optionmap.get("-m"));
 		}
 
-		System.out.println("Labyrinth generation using Depth-first search"); 
-		depthFirstSearch = new DepthFirstSearch();
-
-		System.out.println("Initialising graph..."); 
-		labyrinth.InitialiseGraph();
-
-		System.out.println("Generating labyrinth..."); 
-		labyrinth.GenerateLabyrinth(depthFirstSearch);
-
-		if (optionmap.get("-t") == 0) {
-			System.out.println("Rendering maze to '" + outputprefix + ".svg'...");
-			labyrinth.PrintLabyrinthSVG(outputprefix);
-		} else {
-			System.out.println("Exporting maze plotting parameters to '" + outputprefix
-					+ ".plt' ...");
-			labyrinth.PrintLabyrinthPNG(outputprefix);
-			/*System.out.println("Rendering maze to '" + outputprefix
-					+ ".png' using gnuplot...");
-			system(("gnuplot '" + outputprefix + ".plt'").c_str());*/
-		}
+		rectangularMaze.PrintLabyrinthSVG(outputprefix);
 	}
-
 }
