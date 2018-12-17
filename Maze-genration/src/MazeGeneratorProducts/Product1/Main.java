@@ -2,15 +2,10 @@ package MazeGeneratorProducts.Product1;
 
 import java.util.HashMap;
 
-import MazeGeneratorProducts.Product1.BreadthFirstSearch;
-import MazeGeneratorProducts.Product1.DepthFirstSearch;
-import MazeGeneratorProducts.Product1.MinimumSpanningtreeAlgorithm;
-import MazeGeneratorProducts.Product3.commit3.RectangularMaze;
-
 public class Main {
 
 	public static void main(String[] args) {
-		String outputprefix = "labyrinth";
+		String outputprefix = "maze";
 		
 		HashMap<String, Integer> optionmap = new HashMap<String, Integer>();
 		optionmap.put("-s", 20);
@@ -41,10 +36,10 @@ public class Main {
 		
 		if (optionmap.get("-w") < 1 || optionmap.get("-h") < 1) {
 			System.out.println("Invalide size " + optionmap.get("-w") + "x"
-					+ optionmap.get("-h") + " for rectangular labyrinth");
+					+ optionmap.get("-h") + " for rectangular maze");
 		}
 
-		System.out.println("Rectangular labyrinth of size " + optionmap.get("-w") + "x"
+		System.out.println("Rectangular maze of size " + optionmap.get("-w") + "x"
 				+ optionmap.get("-h"));
 		rectangularMaze = new RectangularMaze(optionmap.get("-w"), optionmap.get("-h"));
 
@@ -52,14 +47,14 @@ public class Main {
 		switch (optionmap.get("-a")) {
 
 		case 0: {
-			System.out.println("labyrinth generation using Depth-first search");
+			System.out.println("Maze generation using Depth-first search");
 			algorithm = new DepthFirstSearch();
 
 			break;
 		}
 
 		case 1: {
-			System.out.println("labyrinth generation using Breadth-first search");
+			System.out.println("Maze generation using Breadth-first search");
 			algorithm = new BreadthFirstSearch();
 
 			break;
@@ -72,9 +67,10 @@ public class Main {
 		System.out.println("Initialising graph...");
 		rectangularMaze.InitialiseGraph();
 
-		System.out.println("Generating labyrinth..."); 
+		System.out.println("Generating maze..."); 
 		rectangularMaze.GenerateMaze(algorithm);
 
 		rectangularMaze.PrintMazeSVG(outputprefix);
 	}
+
 }
