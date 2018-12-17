@@ -6,4 +6,3 @@ public abstract class CellBorder {
 	
 	public abstract String SVGPrintString();
 }
-

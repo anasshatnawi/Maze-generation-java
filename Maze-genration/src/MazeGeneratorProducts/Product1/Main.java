@@ -2,13 +2,17 @@ package MazeGeneratorProducts.Product1;
 
 import java.util.HashMap;
 
+import MazeGeneratorProducts.Product1.BreadthFirstSearch;
+import MazeGeneratorProducts.Product1.DepthFirstSearch;
+import MazeGeneratorProducts.Product1.MinimumSpanningtreeAlgorithm;
+import MazeGeneratorProducts.Product3.commit3.RectangularMaze;
+
 public class Main {
 
 	public static void main(String[] args) {
-		String outputprefix = "maze";
+		String outputprefix = "labyrinth";
 		
 		HashMap<String, Integer> optionmap = new HashMap<String, Integer>();
-		optionmap.put("-m", 0);
 		optionmap.put("-s", 20);
 		optionmap.put("-w", 20);
 		optionmap.put("-h", 20);
@@ -32,7 +36,8 @@ public class Main {
 		    optionmap.put(args[i++] , x);
 		  }
 		
-		RectangularLabyrinth rectangularMaze;
+		RectangularMaze rectangularMaze;
+		MinimumSpanningtreeAlgorithm algorithm = null;
 		
 		if (optionmap.get("-w") < 1 || optionmap.get("-h") < 1) {
 			System.out.println("Invalide size " + optionmap.get("-w") + "x"
@@ -41,41 +46,35 @@ public class Main {
 
 		System.out.println("Rectangular labyrinth of size " + optionmap.get("-w") + "x"
 				+ optionmap.get("-h"));
-		rectangularMaze = new RectangularLabyrinth(optionmap.get("-w"), optionmap.get("-h"));
+		rectangularMaze = new RectangularMaze(optionmap.get("-w"), optionmap.get("-h"));
 
 
 		switch (optionmap.get("-a")) {
 
 		case 0: {
 			System.out.println("labyrinth generation using Depth-first search");
-			DepthFirstSearch depthFisrtSearch = new DepthFirstSearch();
-			
-			System.out.println("Initialising graph...");
-			rectangularMaze.InitialiseGraph();
-			
-			System.out.println("Generating labyrinth..."); 
-			rectangularMaze.GenerateLabyrinth(depthFisrtSearch);
+			algorithm = new DepthFirstSearch();
 
 			break;
 		}
 
 		case 1: {
 			System.out.println("labyrinth generation using Breadth-first search");
-			BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch();
-			
-			System.out.println("Initialising graph...");
-			rectangularMaze.InitialiseGraph();
-			
-			System.out.println("Generating labyrinth..."); 
-			rectangularMaze.GenerateLabyrinth(breadthFirstSearch);
+			algorithm = new BreadthFirstSearch();
 
 			break;
 		}
 
 		default:
-			System.out.println("Unknown labyrinth type " + optionmap.get("-m"));
+			System.out.println("Unknown algorithm type " + optionmap.get("-a"));
 		}
 
-		rectangularMaze.PrintLabyrinthSVG(outputprefix);
+		System.out.println("Initialising graph...");
+		rectangularMaze.InitialiseGraph();
+
+		System.out.println("Generating labyrinth..."); 
+		rectangularMaze.GenerateMaze(algorithm);
+
+		rectangularMaze.PrintMazeSVG(outputprefix);
 	}
 }

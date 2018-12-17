@@ -31,13 +31,7 @@ public class RectangularLabyrinth {
 		return new Tuple<Double,Double,Double,Double>((double)0, (double)0, (double)width_, (double)height_);
 	}
 	
-	public void GenerateLabyrinth(DepthFirstSearch algorithm) {
-		ArrayList<Pair<Integer,Integer>> minimumspanningtree = algorithm.MinimumSpanningTree(vertices_,
-				adjacencylist_);
-		RemoveBorders(minimumspanningtree);
-	}
-	
-	public void GenerateLabyrinth(BreadthFirstSearch algorithm) {
+	public void GenerateLabyrinth(MinimumSpanningtreeAlgorithm algorithm) {
 		ArrayList<Pair<Integer,Integer>> minimumspanningtree = algorithm.MinimumSpanningTree(vertices_,
 				adjacencylist_);
 		RemoveBorders(minimumspanningtree);
@@ -50,4 +44,5 @@ public class RectangularLabyrinth {
 	public void PrintLabyrinthSVG(String outpuprefix) {
 		// Body...
 	}
+	
 }
