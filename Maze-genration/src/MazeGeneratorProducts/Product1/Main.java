@@ -5,13 +5,14 @@ import java.util.HashMap;
 public class Main {
 
 	public static void main(String[] args) {
-String outputprefix = "labyrinth";
+		String outputprefix = "labyrinth";
 		
 		HashMap<String, Integer> optionmap = new HashMap<String, Integer>();
 		optionmap.put("-m", 0);
 		optionmap.put("-s", 20);
 		optionmap.put("-w", 20);
 		optionmap.put("-h", 20);
+		optionmap.put("-t", 0);
 		
 		/* parsing command line parameters */
 		for (int i = 1; i < args.length; i++) {
@@ -72,9 +73,18 @@ String outputprefix = "labyrinth";
 
 		System.out.println("Generating labyrinth..."); 
 		labyrinth.GenerateLabyrinth(depthFirstSearch);
-		
-		labyrinth.PrintLabyrinthSVG(outputprefix);
 
+		if (optionmap.get("-t") == 0) {
+			System.out.println("Rendering maze to '" + outputprefix + ".svg'...");
+			labyrinth.PrintLabyrinthSVG(outputprefix);
+		} else {
+			System.out.println("Exporting maze plotting parameters to '" + outputprefix
+					+ ".plt' ...");
+			labyrinth.PrintLabyrinthPNG(outputprefix);
+			/*System.out.println("Rendering maze to '" + outputprefix
+					+ ".png' using gnuplot...");
+			system(("gnuplot '" + outputprefix + ".plt'").c_str());*/
+		}
 	}
 
 }
