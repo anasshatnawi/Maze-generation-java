@@ -2,17 +2,14 @@ package MazeGeneratorProducts.Product1;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-public class BreadthFirstSearch {
+public class BreadthFirstSearch extends MinimumSpanningtreeAlgorithm {
 	private List<Boolean> visited;
 	private List<Integer> currentLevel;
 	private List<Integer> nextLevel;
 	
-	protected ArrayList<Pair<Integer, Integer>> minimumspanningtree;
-	protected Random generator = new Random();
-	
-	public ArrayList<Pair<Integer, Integer>> MinimumSpanningTree(int vertices, ArrayList<ArrayList<Pair<Integer,CellBorder>>> adjacencylist){
+	@Override
+	public ArrayList<Pair<Integer, Integer>> MinimumSpanningTree(int vertices, ArrayList<ArrayList<Pair<Integer,CellBorder>>> adjacencylist) {
 		for (int i = 0; i < vertices; i++) {
 			visited.set(i, false);
 		}
