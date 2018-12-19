@@ -2,14 +2,14 @@ package MazeGeneratorProducts.Product1;
 
 import java.util.ArrayList;
 
-public class RectangularLabyrinth {
+public class RectangularMaze {
 	private int width_;
 	private int height_;
 	private int vertices_;
 	private int startvertex_, endvertex_;
 	private ArrayList<ArrayList<Pair<Integer, CellBorder>>> adjacencylist_;
 		
-	public RectangularLabyrinth(int width, int height) {
+	public RectangularMaze(int width, int height) {
 		vertices_ = width * height;
 		startvertex_ = 0;
 		endvertex_ = width * height -1; 
@@ -31,7 +31,7 @@ public class RectangularLabyrinth {
 		return new Tuple<Double,Double,Double,Double>((double)0, (double)0, (double)width_, (double)height_);
 	}
 	
-	public void GenerateLabyrinth(MinimumSpanningtreeAlgorithm algorithm) {
+	public void GenerateMaze(MinimumSpanningtreeAlgorithm algorithm) {
 		ArrayList<Pair<Integer,Integer>> minimumspanningtree = algorithm.MinimumSpanningTree(vertices_,
 				adjacencylist_);
 		RemoveBorders(minimumspanningtree);
@@ -41,8 +41,9 @@ public class RectangularLabyrinth {
 		// Body ...
 	}
 	
-	public void PrintLabyrinthSVG(String outpuprefix) {
+	public void PrintMazeSVG(String outpuprefix) {
 		// Body...
 	}
+	
 	
 }
