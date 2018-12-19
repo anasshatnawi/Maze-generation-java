@@ -2,16 +2,17 @@ package MazeGeneratorProducts.Product1;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
-public class BreadthFirstSearch extends MinimumSpanningtreeAlgorithm {
+public class BreadthFirstSearch {
 	private List<Boolean> visited;
 	private List<Integer> currentLevel;
 	private List<Integer> nextLevel;
-
-
-	@Override
-	public ArrayList<Pair<Integer, Integer>> MinimumSpanningTree(int vertices,
-			ArrayList<ArrayList<Pair<Integer, CellBorder>>> adjacencylist) {
+	
+	protected ArrayList<Pair<Integer, Integer>> minimumspanningtree;
+	protected Random generator = new Random();
+	
+	public ArrayList<Pair<Integer, Integer>> MinimumSpanningTree(int vertices, ArrayList<ArrayList<Pair<Integer,CellBorder>>> adjacencylist){
 		for (int i = 0; i < vertices; i++) {
 			visited.set(i, false);
 		}
@@ -21,7 +22,7 @@ public class BreadthFirstSearch extends MinimumSpanningtreeAlgorithm {
 		minimumspanningtree.clear();
 		while(!currentLevel.isEmpty()) {
 			for (int vertex : currentLevel) {
-				for (Pair<Integer, CellBorder> edge : adjacencylist.get(vertex)) {
+				for (Pair<Integer,CellBorder> edge : adjacencylist.get(vertex)) {
 					int nextvertex = edge.x;
 					if(nextvertex < 0 || visited.get(nextvertex))continue;
 					visited.set(nextvertex, true);
@@ -29,7 +30,7 @@ public class BreadthFirstSearch extends MinimumSpanningtreeAlgorithm {
 					nextLevel.add(nextvertex);
 				}
 			}
-
+			
 			currentLevel.clear();
 			List<Integer> tmp = currentLevel;
 			currentLevel = nextLevel;
