@@ -12,6 +12,7 @@ public class DepthFirstSearch extends MinimumSpanningtreeAlgorithm {
 		visited = new ArrayList<Boolean>(vertices);
 		DFS(getRandomIntInclusive(0,vertices - 1),
 				adjacencylist);
+		System.err.println();
 		return minimumspanningtree;
 	}
 	/** ************************** **/
